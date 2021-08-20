@@ -185,11 +185,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </select>
             </div>
 
-            <div class="form-group">
-              <label for="picUpload">Select picture</label>
-              <div>
-                <input type="file" class="" id="picUpload">
+            <div class="row">
+              <div class="col-md-2">
+                <img id='imgPreview' src="./data/imgs/inv_placeholder.png" alt="">
+              </div>
+              <div class="col-md-10">
 
+                <div class="form-group">
+                  <label for="picUpload">Select picture</label>
+                  <div>
+                    <input type="file" class="" id="picUpload">
+    
+                  </div>
+                </div>
               </div>
             </div>
                   

@@ -74,7 +74,7 @@ switch ($_POST["mode"]) {
     case 'getRaritiesForOptions':
         $returnArray = [];
 
-        $result = $db->Select("SELECT id, name FROM rarities WHERE visible='1'");
+        $result = $db->Select("SELECT id, name, color FROM rarities WHERE visible='1'");
         $returnArray["data"] = $result;
         $returnArray["msg"] = "success";
 
@@ -89,7 +89,28 @@ switch ($_POST["mode"]) {
 
         echo json_encode($returnArray);
         break;
-    
+    case 'saveProduct':
+        $name = $_POST["name"];
+        $rarity = $_POST["rarity"];
+        $category = $_POST["category"];
+        
+        $file = $_FILES["image"];
+        $fileName = $file["name"];
+        $fileType = $file["type"];
+        $fileTmp_name = $file["tmp_name"];
+
+        $fileDestination = "../data/imgs/" . $fileName;
+
+        $returnArray = [];
+
+        $db->Execute("INSERT INTO product (name, rarity, category, pic) VALUES ('$name', '$rarity', '$category', '$fileName')");
+        $returnArray["msg"] = "success";
+
+        move_uploaded_file($fileTmp_name, $fileDestination);
+
+        echo json_encode($returnArray);
+
+        break;
     default:
         # code...
         break;

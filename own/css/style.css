@@ -23,6 +23,10 @@
     /* text-shadow: 2px 2px black; */
 }
 
+.f-bold{
+    font-weight: bold;
+}
+
 .mini-img{
     height: 30px;
     width: 30px;

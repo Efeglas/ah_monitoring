@@ -29,7 +29,7 @@ const addClickEventToSaveSoldBtn = (button, inputs) => {
             Toast.fire({
                 icon: 'success',
                 title: 'Signed in successfully'
-            })
+            });
             $("#modal-addSold").modal('hide');
             inputs.productSelect.value = "-1";
             inputs.countInput.value = "";
@@ -82,14 +82,21 @@ const getProducts = async () => {
 }
 
 //?PRODUCT, RARITY, CATEGORY OPTIONS
-const generateOptionsForSelects = async (select, mode) => {
+const generateOptionsForSelects = async (select, mode, color = false) => {
     $.post("./php/api.php", { mode: mode }, (response) => {
         let parsedData = JSON.parse(response);
         //console.log(parsedData);
         select.innerHTML = "";
         select.innerHTML += `<option value='-1'>Choose...</option>`;
-        for (const row of parsedData.data) {
-            select.innerHTML += `<option value='${row.id}'>${row.name}</option>`;
+        if (color) {
+            for (const row of parsedData.data) {
+                select.innerHTML += `<option value='${row.id}' style='color:${row.color};'>${row.name}</option>`;
+            }
+        } else {
+
+            for (const row of parsedData.data) {
+                select.innerHTML += `<option value='${row.id}'>${row.name}</option>`;
+            }
         }
     });
 }
@@ -117,14 +124,53 @@ const Toast = Swal.mixin({
 
 //! products
 
-const addEventToAddProductBtn = (button) => {
+const addEventToSaveProductBtn = (button, inputs) => {
     button.addEventListener("click", (event) => {
-        $("#modal-addProduct").modal();
-    });
-}
 
-const addEventToSaveProductBtn = (button) => {
-    button.addEventListener("click", (event) => {
+        if (inputs.picUpload.files.length > 0) {
+            
+            let formData = new FormData();
+    
+            formData.append('mode', "saveProduct");
+            formData.append('image', inputs.picUpload.files[0]);
+            formData.append('name', inputs.nameInput.value);
+            formData.append('rarity', inputs.raritySelect.value);
+            formData.append('category', inputs.categorySelect.value);
+    
+            $.ajax({
+                url: './php/api.php',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    let parsedData = JSON.parse(response);
+                    console.log(parsedData);
+                    if (parsedData.msg == "success") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Successfully added!'
+                        });
+                        inputs.picUpload.value = "";
+                        inputs.nameInput.value = "";
+                        inputs.raritySelect.value = "-1";
+                        inputs.categorySelect.value = "-1";
+                        document.getElementById("imgPreview").src = "./data/imgs/inv_placeholder.png";
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Unknown error!!!'
+                        });
+                    }
+                },
+             }); 
+
+        } else {
+            Toast.fire({
+                icon: 'error',
+                title: 'Empty field!'
+            });
+        }
 
     });
 }
