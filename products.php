@@ -49,7 +49,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="./own/css/style.css">
   <!-- OWN SCRIPTS -->
   <script src="./own/js/functions.js" defer></script>
-  
+  <script src="./own/js/products.js" defer></script>
+
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -149,37 +150,88 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="container-fluid">
 
           <!-- //! main content -->
+          <div class="row">
 
-          
+            <div class="col-md-3">
+
+              <div class="card">
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                  <h3 class="card-title">
+                    <i class="fas fa-coins"></i>
+                    Add products
+                  </h3>
+                  <div class="card-tools">
+                    
+                  </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+
+                <div class="form-group">
+              <label>Name</label>
+              <input id="nameInput" type="text" class="form-control" placeholder="Enter ...">
+            </div>
+
+            <div class="form-group">
+              <label>Rarity</label>
+              <select id="raritySelect" class="form-control">
+
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Category</label>
+              <select id="categorySelect" class="form-control">
+
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="picUpload">Select picture</label>
+              <div>
+                <input type="file" class="" id="picUpload">
+
+              </div>
+            </div>
+                  
+
+                </div><!-- /.card-body -->
+                <div class="card-footer">
+                  <button id="saveProductAddBtn" type="submit" class="btn btn-success float-right">Add</button>
+                  
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-9">
+
+              <div class="card">
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                  <h3 class="card-title">
+                    <i class="fas fa-coins"></i>
+                    Products
+                  </h3>
+                  <div class="card-tools">
+                    
+                  </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+
+                  <table id='productsDataTable' class="table table-bordered table-hover dataTable dtr-inline">
+
+                  </table>
+
+                </div><!-- /.card-body -->
+              </div>
+            </div>
+          </div>
+
+
 
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-    <div class="modal fade" id="modal-def">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">xxx</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            
-          </div>
-
-          <div class="modal-footer">
-            <button id="saveProductSoldBtn" type="button" class="btn btn-success">Hozzáadás</button>
-          </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
 
 
 
@@ -192,6 +244,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="./plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.min.js"></script>
 </body>

@@ -40,15 +40,15 @@ switch ($_POST["mode"]) {
         $deposite = $_POST["data"]["deposite"];
         $price = $_POST["data"]["price"];
         $ahCut = $_POST["data"]["ahCut"];
-        $date = $_POST["data"]["date"];   
+          
         $returnArray = [];
 
-        $db->Execute("INSERT INTO sold (productID, count, price, deposite, ah_cut, date) VALUES ('$productId', '$count', '$price', '$deposite', '$ahCut', '$date')");
+        $db->Execute("INSERT INTO sold (productID, count, price, deposite, ah_cut) VALUES ('$productId', '$count', '$price', '$deposite', '$ahCut')");
         $returnArray["msg"] = "success";
 
         echo json_encode($returnArray);
         break;
-    case 'getProducts':
+    case 'getProductsForOptions':
         $returnArray = [];
 
         $result = $db->Select("SELECT id, name FROM product WHERE visible='1'");
@@ -57,6 +57,37 @@ switch ($_POST["mode"]) {
 
         echo json_encode($returnArray);
             
+        break;
+    case 'getAllProductsData':
+        $returnArray = [];
+
+        $sql = "SELECT p.id, p.name, p.pic, r.name as rarity, r.color, c.name as category FROM product as p 
+        JOIN rarities as r ON r.id=p.rarity
+        JOIN categories as c ON c.id=p.category
+        WHERE p.visible='1'";
+        $result = $db->Select($sql);
+        $returnArray["data"] = $result;
+        $returnArray["msg"] = "success";
+
+        echo json_encode($returnArray);
+        break;
+    case 'getRaritiesForOptions':
+        $returnArray = [];
+
+        $result = $db->Select("SELECT id, name FROM rarities WHERE visible='1'");
+        $returnArray["data"] = $result;
+        $returnArray["msg"] = "success";
+
+        echo json_encode($returnArray);
+        break;
+    case 'getCategoriesForOptions':
+        $returnArray = [];
+
+        $result = $db->Select("SELECT id, name FROM categories WHERE visible='1'");
+        $returnArray["data"] = $result;
+        $returnArray["msg"] = "success";
+
+        echo json_encode($returnArray);
         break;
     
     default:

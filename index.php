@@ -214,16 +214,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <label>AH cut</label>
               <input id="ahCutInput" type="text" class="form-control" placeholder="Enter ...">
             </div>
-
-            <div class="form-group">
-              <label>Date:</label>
-              <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                <input id="soldDateTime" type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime">
-                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
-                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
-              </div>
-            </div>
+          
           </div>
 
           <div class="modal-footer">

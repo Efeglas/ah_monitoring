@@ -1,6 +1,6 @@
 const addClickEventToAddSoldPruductBtn = (button) => {
     button.addEventListener("click", (event) => {
-        document.getElementById("soldDateTime").value = "";
+        
         $('#reservationdatetime').datetimepicker({
             icons: {
                 time: 'far fa-clock'
@@ -21,7 +21,7 @@ const addClickEventToSaveSoldBtn = (button, inputs) => {
             price: inputs.priceInput.value,
             deposite: depositeInput.value,
             ahCut: inputs.ahCutInput.value,
-            date: inputs.soldDateTime.value
+            
         }
         $.post("./php/api.php", { mode: "insertSoldPruduct", data: dataObj }, (response) => {
             //let parsedData = JSON.parse(response);
@@ -36,7 +36,7 @@ const addClickEventToSaveSoldBtn = (button, inputs) => {
             inputs.priceInput.value = "";
             inputs.depositeInput.value = "";
             inputs.ahCutInput.value = "";
-            inputs.soldDateTime.value = "";
+            
         });
     });
 }
@@ -74,15 +74,16 @@ const formatFloatToGoldSilverBronsPrice = (data) => {
 }
 
 const getProducts = async () => {
-    $.post("./php/api.php", { mode: "getProducts" }, (response) => {
+    $.post("./php/api.php", { mode: "getProductsForOptions" }, (response) => {
         let parsedData = JSON.parse(response);
         //console.log(parsedData);
         return parsedData;
     });
 }
 
-const generateOptionsForProductSelect = async (select) => {
-    $.post("./php/api.php", { mode: "getProducts" }, (response) => {
+//?PRODUCT, RARITY, CATEGORY OPTIONS
+const generateOptionsForSelects = async (select, mode) => {
+    $.post("./php/api.php", { mode: mode }, (response) => {
         let parsedData = JSON.parse(response);
         //console.log(parsedData);
         select.innerHTML = "";
@@ -92,6 +93,7 @@ const generateOptionsForProductSelect = async (select) => {
         }
     });
 }
+
 /* $.post("./php/api.php", {mode: "insertSoldPruduct"}, (response) =>{
     console.log(response);
 }); */
@@ -112,3 +114,17 @@ const Toast = Swal.mixin({
         toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
 })
+
+//! products
+
+const addEventToAddProductBtn = (button) => {
+    button.addEventListener("click", (event) => {
+        $("#modal-addProduct").modal();
+    });
+}
+
+const addEventToSaveProductBtn = (button) => {
+    button.addEventListener("click", (event) => {
+
+    });
+}

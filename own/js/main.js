@@ -7,7 +7,6 @@ let countInput = document.getElementById("countInput");
 let priceInput = document.getElementById("priceInput");
 let depositeInput = document.getElementById("depositeInput");
 let ahCutInput = document.getElementById("ahCutInput");
-let soldDateTime = document.getElementById("soldDateTime");
 
 //?INCOME
 let sumIncome = document.getElementById("sumIncome");
@@ -15,7 +14,7 @@ let sumIncome = document.getElementById("sumIncome");
 $(document).ready(function () {
 
 
-    generateOptionsForProductSelect(productSelect);
+    generateOptionsForSelects(productSelect, "getProductsForOptions");
 
     addClickEventToAddSoldPruductBtn(addSoldProductBtn);
     let inputs = {
@@ -24,7 +23,7 @@ $(document).ready(function () {
         priceInput: priceInput,
         depositeInput: depositeInput,
         ahCutInput: ahCutInput,
-        soldDateTime: soldDateTime
+       
     }
     addClickEventToSaveSoldBtn(saveProductSoldBtn, inputs);
 
@@ -34,6 +33,7 @@ $(document).ready(function () {
 
         $('#mainDataTable').DataTable({
             data: parsedData.data,
+            order: [[ 0, "desc" ]],
             columns: [
                 {
                     title: "ID",
