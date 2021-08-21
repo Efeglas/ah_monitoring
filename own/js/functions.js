@@ -1,3 +1,6 @@
+let maintable = null;
+let productTable = null;
+
 const addClickEventToAddSoldPruductBtn = (button) => {
     button.addEventListener("click", (event) => {
         
@@ -36,9 +39,93 @@ const addClickEventToSaveSoldBtn = (button, inputs) => {
             inputs.priceInput.value = "";
             inputs.depositeInput.value = "";
             inputs.ahCutInput.value = "";
+
+            renderMainDatatableAndSumGold(true);
             
         });
     });
+}
+
+const renderMainDatatableAndSumGold = (rerender = false) => {
+
+    if (rerender) {
+
+        $.post("./php/api.php", { mode: "getAllSoldProductData" }, (response) => {
+            let parsedData = JSON.parse(response);
+            console.log(parsedData);
+
+            maintable.clear().rows.add(parsedData.data).draw();
+        });
+
+    } else {
+
+        $.post("./php/api.php", { mode: "getAllSoldProductData" }, (response) => {
+            let parsedData = JSON.parse(response);
+            console.log(parsedData);
+    
+            maintable = $('#mainDataTable').DataTable({
+                data: parsedData.data,
+                order: [[ 0, "desc" ]],
+                columns: [
+                    {
+                        title: "ID",
+                        data: "id"
+                    },
+                    {
+                        title: "Name",
+                        data: "name",
+                        "render": function (data, type, row, meta) {
+                            let picture = "";
+                            if (row.pic != null) {
+                                picture = `<img class="mini-img" src="./data/imgs/${row.pic}">`;
+                            }
+                            return `<div class="flex-c">${picture}<b class="f-shadow" style='color:${row.color};'>${data}<b></div>`;
+                         }
+                    },
+                    {
+                        title: "Count",
+                        data: "count"
+                    },
+                    {
+                        title: "price",
+                        data: "price",
+                        "render": function (data, type, row, meta) {
+                           return formatFloatToGoldSilverBronsPrice(data);
+                        }
+                    },
+                    {
+                        title: "Deposite",
+                        data: "deposite",
+                        "render": function (data, type, row, meta) {
+                            return formatFloatToGoldSilverBronsPrice(data);
+                         }
+                    },
+                    {
+                        title: "AH cut",
+                        data: "ah_cut",
+                        "render": function (data, type, row, meta) {
+                            return formatFloatToGoldSilverBronsPrice(data);
+                         }
+                    },
+                    {
+                        title: "Gain",
+                        data: "gain",
+                        "render": function (data, type, row, meta) {
+                            return formatFloatToGoldSilverBronsPrice(data);
+                         }
+                    },
+                    {
+                        title: "Date of record",
+                        data: "date"
+                    },
+    
+                ]
+            });
+    
+            sumIncome.innerHTML = `All income: ${formatFloatToGoldSilverBronsPrice(parsedData.sum)}`;
+               
+        });
+    }
 }
 
 const formatFloatToGoldSilverBronsPrice = (data) => {
@@ -156,6 +243,7 @@ const addEventToSaveProductBtn = (button, inputs) => {
                         inputs.raritySelect.value = "-1";
                         inputs.categorySelect.value = "-1";
                         document.getElementById("imgPreview").src = "./data/imgs/inv_placeholder.png";
+                        renderProductsTable(true);
                     } else {
                         Toast.fire({
                             icon: 'error',
@@ -173,4 +261,57 @@ const addEventToSaveProductBtn = (button, inputs) => {
         }
 
     });
+}
+
+const renderProductsTable = (rerender = false) => {
+
+    if (rerender) {
+
+        $.post("./php/api.php", { mode: "getAllProductsData" }, (response) => {
+            let parsedData = JSON.parse(response);
+            console.log(parsedData);
+
+            productTable.clear().rows.add(parsedData.data).draw();
+        });
+
+    } else {
+        $.post("./php/api.php", { mode: "getAllProductsData" }, (response) => {
+            let parsedData = JSON.parse(response);
+            console.log(parsedData);
+    
+            productTable = $('#productsDataTable').DataTable({
+                data: parsedData.data,
+                order: [[ 0, "desc" ]],
+                columns: [
+                    {
+                        title: "ID",
+                        data: "id"
+                    },
+                    {
+                        title: "Name",
+                        data: "name",
+                        "render": function (data, type, row, meta) {
+                            let picture = "";
+                            if (row.pic != null) {
+                                picture = `<img class="mini-img" src="./data/imgs/${row.pic}">`;
+                            }
+                            return `<div class="flex-c">${picture}<b class="f-shadow" style='color:${row.color};'>${data}<b></div>`;
+                         }
+                    },
+                    {
+                        title: "Rarity",
+                        data: "rarity"
+                    },
+                    {
+                        title: "Category",
+                        data: "category"
+                    },
+                    
+    
+                ]
+            });
+    
+        });
+    }
+
 }
