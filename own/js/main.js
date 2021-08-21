@@ -16,15 +16,24 @@ $(document).ready(function () {
 
     generateOptionsForSelects(productSelect, "getProductsForOptions");
 
-    addClickEventToAddSoldPruductBtn(addSoldProductBtn);
+    
+    productSelect.addEventListener("change", (event) => {
+        if (event.currentTarget.value == 15) {
+            countInput.value = 1;
+            depositeInput.value = 0;
+            ahCutInput.value = 0;
+        }
+    });
+    
     let inputs = {
         productSelect: productSelect,
         countInput: countInput,
         priceInput: priceInput,
         depositeInput: depositeInput,
         ahCutInput: ahCutInput,
-       
+        
     }
+    addClickEventToAddSoldPruductBtn(addSoldProductBtn, inputs);
     addClickEventToSaveSoldBtn(saveProductSoldBtn, inputs);
 
     renderMainDatatableAndSumGold();

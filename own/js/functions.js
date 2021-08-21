@@ -1,7 +1,7 @@
 let maintable = null;
 let productTable = null;
 
-const addClickEventToAddSoldPruductBtn = (button) => {
+const addClickEventToAddSoldPruductBtn = (button, inputs) => {
     button.addEventListener("click", (event) => {
         
         $('#reservationdatetime').datetimepicker({
@@ -10,6 +10,11 @@ const addClickEventToAddSoldPruductBtn = (button) => {
             },
             format: "YYYY.MM.DD HH:mm:ss"
         });
+        inputs.productSelect.value = "-1";
+        inputs.countInput.value = "";
+        inputs.priceInput.value = "";
+        inputs.depositeInput.value = "";
+        inputs.ahCutInput.value = "";
         $("#modal-addSold").modal();
     });
 }
@@ -55,6 +60,7 @@ const renderMainDatatableAndSumGold = (rerender = false) => {
             console.log(parsedData);
 
             maintable.clear().rows.add(parsedData.data).draw();
+            sumIncome.innerHTML = `All income: ${formatFloatToGoldSilverBronsPrice(parsedData.sum)}`;
         });
 
     } else {
