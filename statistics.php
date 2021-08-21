@@ -45,11 +45,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="./plugins/sweetalert2/sweetalert2.min.js" defer></script>
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="./plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- ChartJS -->
+  <script src="./plugins/chart.js/Chart.min.js"></script>
   <!-- OWN -->
   <link rel="stylesheet" href="./own/css/style.css">
   <!-- OWN SCRIPTS -->
   <script src="./own/js/functions.js" defer></script>
-  
+  <script src="./own/js/statistics.js" defer></script>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -132,11 +134,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Főoldal</h1>
+              <h1 class="m-0">Statistics</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item">Főoldal</li>
+                <li class="breadcrumb-item">Statistics</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -150,6 +152,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           <!-- //! main content -->
 
+          <div class="row">
+            <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                  <h3 class="card-title">
+                    <i class="fas fa-coins"></i>
+                    Products
+                  </h3>
+                  <div class="card-tools">
+                    
+                  </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+
+                  <div class="form-group">
+                    <label>Product</label>
+                    <select id="productSelect" class="form-control">
+      
+                    </select>
+                  </div>
+      
+                    <canvas id="chartjs"></canvas>
+             
+
+                </div><!-- /.card-body -->
+                
+              </div>
+
+
+            </div>
+          </div>
           
 
         </div><!-- /.container-fluid -->

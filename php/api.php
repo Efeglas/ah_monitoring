@@ -111,6 +111,31 @@ switch ($_POST["mode"]) {
         echo json_encode($returnArray);
 
         break;
+    case 'stat_test':
+        $product = $_POST["product"];
+        $returnArray = [];
+
+        $sql = "SELECT s.price, s.date, p.name FROM sold as s 
+        JOIN product as p ON p.id=s.productID
+        WHERE s.visible='1' AND s.productID='$product'";
+        $result = $db->Select($sql);
+        $returnArray["data"] = $result;
+        $returnArray["msg"] = "success";
+
+        $returnArray["price"] = [];
+        $returnArray["date"] = [];
+        $returnArray["name"] = $result[0]["name"];
+
+        foreach ($result as $key => $value) {
+            array_push($returnArray["price"], $value["price"]);
+            array_push($returnArray["date"], $value["date"]);
+        }
+
+
+        
+
+        echo json_encode($returnArray);
+        break;
     default:
         # code...
         break;
