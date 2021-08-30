@@ -136,6 +136,53 @@ switch ($_POST["mode"]) {
 
         echo json_encode($returnArray);
         break;
+    case 'insertDailyPrice':
+        $data = $_POST["data"];
+
+        $returnArray = [];
+        //var_dump($data);
+        foreach ($data as $key => $value) {
+
+            $sql = "SELECT id FROM addon_products WHERE itemID='$key'";
+            $result = $db->Select($sql);
+            $id = $result[0]["id"];
+
+            $length = strlen($value);
+            $slicedEnd = substr($value, $length - 4);
+            $slicedGold= substr($value, 0, $length - 4);         
+            $price = $slicedGold . "." . $slicedEnd;
+
+            $sql = "INSERT INTO addon_price (addon_productID, price) VALUES ('$id', '$price')";
+            //var_dump($sql);
+            $db->Execute($sql);
+            $returnArray["msg"] = "success";
+        }
+
+        echo json_encode($returnArray);
+        break;
+    case 'getStatForDailyPrices':
+        $returnArray = [];
+        $sql = "SELECT p.price, prod.name, prod.id, p.date FROM addon_price as p 
+        JOIN addon_products as prod ON prod.id=p.addon_productID";
+        $result = $db->Select($sql);
+        $obj = (object) array('1' => 'foo');
+        
+        $data = [];
+
+        foreach ($result as $key => $value) {
+            if (array_key_exists($value["id"], $data)) {
+                array_push($data[$value["id"]]->labels, $value["date"]);
+                array_push($data[$value["id"]]->data, $value["price"]);
+            } else {
+                $data[$value["id"]] = (object) array('id' => $value["id"], 'labels' => [], 'data' => [], 'name' => $value["name"]);
+                array_push($data[$value["id"]]->labels, $value["date"]);
+                array_push($data[$value["id"]]->data, $value["price"]);
+            }
+        }
+
+        $returnArray["data"] = $data;
+        echo json_encode($returnArray);
+        break;
     default:
         # code...
         break;

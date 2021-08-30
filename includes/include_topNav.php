@@ -9,3 +9,7 @@
 <li class="nav-item d-none d-sm-inline-block">
     <a href="statistics.php" class="nav-link">Statistics</a>
 </li>
+
+<li class="nav-item d-none d-sm-inline-block">
+    <a href="daily_statistics.php" class="nav-link">Daily_Statistics</a>
+</li>

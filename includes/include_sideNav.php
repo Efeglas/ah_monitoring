@@ -24,3 +24,12 @@
         </p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="daily_statistics.php" class="nav-link">
+        <i class="nav-icon fas fa-chart-area"></i>
+        <p>
+            Daily_Statistics
+        </p>
+    </a>
+</li>
